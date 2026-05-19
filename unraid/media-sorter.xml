@@ -29,15 +29,6 @@
 
   <Config Name="Movies Path" Target="/mnt/movies" Default="/mnt/user/Movies" Mode="rw" Description="Destination on Unraid for organised movie files." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/Movies</Config>
 
-  <!-- Environment variables — SOURCE/TV/MOVIES paths are fixed to the
-       container mount points above and should not be changed. -->
-
-  <Config Name="SOURCE_PATH" Target="SOURCE_PATH" Default="/mnt/source" Mode="" Description="Container path for the rclone source mount. Must match the container path above." Type="Variable" Display="always" Required="true" Mask="false">/mnt/source</Config>
-
-  <Config Name="TVSHOW_PATH" Target="TVSHOW_PATH" Default="/mnt/tvshows" Mode="" Description="Container path for the TV shows mount. Must match the container path above." Type="Variable" Display="always" Required="true" Mask="false">/mnt/tvshows</Config>
-
-  <Config Name="MOVIES_PATH" Target="MOVIES_PATH" Default="/mnt/movies" Mode="" Description="Container path for the movies mount. Must match the container path above." Type="Variable" Display="always" Required="true" Mask="false">/mnt/movies</Config>
-
   <Config Name="SCAN_INTERVAL" Target="SCAN_INTERVAL" Default="300" Mode="" Description="How often (in seconds) to scan for new files. Default 300 = every 5 minutes." Type="Variable" Display="always" Required="false" Mask="false">300</Config>
 
   <Config Name="DRY_RUN" Target="DRY_RUN" Default="" Mode="" Description="Set to 'true' to log what would be moved without actually moving anything. Useful for testing. Leave empty for normal operation." Type="Variable" Display="always" Required="false" Mask="false"></Config>

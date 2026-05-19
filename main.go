@@ -4,7 +4,6 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -42,20 +41,12 @@ func main() {
 
 func loadConfig() Config {
 	return Config{
-		SourcePath:   requireEnv("SOURCE_PATH"),
-		MoviesPath:   requireEnv("MOVIES_PATH"),
-		TVShowPath:   requireEnv("TVSHOW_PATH"),
+		SourcePath:   "/mnt/source",
+		MoviesPath:   "/mnt/movies",
+		TVShowPath:   "/mnt/tvshows",
 		ScanInterval: envDuration("SCAN_INTERVAL", 300),
 		DryRun:       os.Getenv("DRY_RUN") != "",
 	}
-}
-
-func requireEnv(key string) string {
-	v := strings.TrimSpace(os.Getenv(key))
-	if v == "" {
-		log.Fatalf("[Config] Required environment variable %s is not set", key)
-	}
-	return v
 }
 
 func envDuration(key string, defaultSecs int) time.Duration {
