@@ -32,11 +32,11 @@
   <!-- Environment variables — SOURCE/TV/MOVIES paths are fixed to the
        container mount points above and should not be changed. -->
 
-  <Config Name="SOURCE_PATH" Target="SOURCE_PATH" Default="/mnt/source" Mode="" Description="[Do not change] Container path for the rclone source mount." Type="Variable" Display="advanced" Required="true" Mask="false">/mnt/source</Config>
+  <Config Name="SOURCE_PATH" Target="SOURCE_PATH" Default="/mnt/source" Mode="" Description="Container path for the rclone source mount. Must match the container path above." Type="Variable" Display="always" Required="true" Mask="false">/mnt/source</Config>
 
-  <Config Name="TVSHOW_PATH" Target="TVSHOW_PATH" Default="/mnt/tvshows" Mode="" Description="[Do not change] Container path for the TV shows mount." Type="Variable" Display="advanced" Required="true" Mask="false">/mnt/tvshows</Config>
+  <Config Name="TVSHOW_PATH" Target="TVSHOW_PATH" Default="/mnt/tvshows" Mode="" Description="Container path for the TV shows mount. Must match the container path above." Type="Variable" Display="always" Required="true" Mask="false">/mnt/tvshows</Config>
 
-  <Config Name="MOVIES_PATH" Target="MOVIES_PATH" Default="/mnt/movies" Mode="" Description="[Do not change] Container path for the movies mount." Type="Variable" Display="advanced" Required="true" Mask="false">/mnt/movies</Config>
+  <Config Name="MOVIES_PATH" Target="MOVIES_PATH" Default="/mnt/movies" Mode="" Description="Container path for the movies mount. Must match the container path above." Type="Variable" Display="always" Required="true" Mask="false">/mnt/movies</Config>
 
   <Config Name="SCAN_INTERVAL" Target="SCAN_INTERVAL" Default="300" Mode="" Description="How often (in seconds) to scan for new files. Default 300 = every 5 minutes." Type="Variable" Display="always" Required="false" Mask="false">300</Config>
 
