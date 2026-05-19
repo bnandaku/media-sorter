@@ -4,7 +4,7 @@ Watches a directory (e.g. an rclone-mounted Put.io folder) and automatically mov
 
 ## How it works
 
-1. Scans `SOURCE_PATH` recursively for video files (`.mkv`, `.mp4`, `.avi`, etc.)
+1. Scans the source directory recursively for video files (`.mkv`, `.mp4`, `.avi`, etc.)
 2. Waits for each file to be **stable** (size unchanged across two consecutive scans) before moving it — prevents moving partially-synced rclone files
 3. Parses the filename to determine TV show or movie
 4. **TV shows** → `TVSHOW_PATH/ShowName/Season_XX/ShowName.SXXEXX.quality.ext`
@@ -23,11 +23,10 @@ Watches a directory (e.g. an rclone-mounted Put.io folder) and automatically mov
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `SOURCE_PATH` | ✅ | — | Directory to watch (rclone mount) |
-| `TVSHOW_PATH` | ✅ | — | Destination for TV shows |
-| `MOVIES_PATH` | ✅ | — | Destination for movies |
 | `SCAN_INTERVAL` | — | `300` | Seconds between scans |
 | `DRY_RUN` | — | unset | Set to any value to log moves without executing them |
+
+The container always reads from `/mnt/source` and writes to `/mnt/tvshows` and `/mnt/movies`. Configure those via volume mounts.
 
 ## Unraid — Community Applications (easiest)
 
@@ -45,16 +44,11 @@ Watches a directory (e.g. an rclone-mounted Put.io folder) and automatically mov
 6. Optionally set `DRY_RUN=true` for a test run first
 7. Click **Apply**
 
-> The `SOURCE_PATH`, `TVSHOW_PATH`, and `MOVIES_PATH` environment variables are pre-wired to the container mount points — you only need to set the host-side paths.
-
 ## Docker (manual)
 
 ```bash
 docker run -d \
   --name media-sorter \
-  -e SOURCE_PATH=/mnt/source \
-  -e TVSHOW_PATH=/mnt/tvshows \
-  -e MOVIES_PATH=/mnt/movies \
   -e SCAN_INTERVAL=300 \
   -v /your/rclone/mount:/mnt/source \
   -v /your/tv/path:/mnt/tvshows \
@@ -66,9 +60,6 @@ docker run -d \
 
 ```bash
 docker run --rm \
-  -e SOURCE_PATH=/mnt/source \
-  -e TVSHOW_PATH=/mnt/tvshows \
-  -e MOVIES_PATH=/mnt/movies \
   -e DRY_RUN=true \
   -v /your/rclone/mount:/mnt/source \
   -v /your/tv/path:/mnt/tvshows \
