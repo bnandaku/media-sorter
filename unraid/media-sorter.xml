@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>media-sorter</Name>
+  <Repository>bharatram1/media-sorter:latest</Repository>
+  <Registry>https://hub.docker.com/r/bharatram1/media-sorter</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Project>https://github.com/bnandaku/media-sorter</Project>
+  <Overview>
+    Watches an rclone-mounted Put.io directory and automatically organises video files into your Plex media library.&#xD;&#xD;
+    TV shows are sorted into ShowName/Season_XX/ folders with standardised filenames.&#xD;
+    Movies are placed in a flat movies folder.&#xD;&#xD;
+    Files are only moved once their size has been stable across two consecutive scans, preventing partially-synced files from being touched.
+  </Overview>
+  <Category>MediaApp:Other</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/bnandaku/media-sorter/main/unraid/media-sorter.xml</TemplateURL>
+  <ExtraParams>--restart=unless-stopped</ExtraParams>
+  <Description>Watches an rclone-mounted Put.io directory and automatically organises video files into your Plex media library.</Description>
+
+  <!-- Path mappings: set your Unraid host paths below.
+       The container always sees /mnt/source, /mnt/tvshows, /mnt/movies
+       so the env vars are pre-filled and never need changing. -->
+
+  <Config
+    Name="Source Path (rclone / Put.io mount)"
+    Target="/mnt/source"
+    Default=""
+    Mode="rw"
+    Description="Your rclone-mounted Put.io directory on the Unraid host. Example: /mnt/user/putio"
+    Type="Path"
+    Display="always"
+    Required="true"
+    Mask="false">
+  </Config>
+
+  <Config
+    Name="TV Shows Path"
+    Target="/mnt/tvshows"
+    Default="/mnt/user/TV Shows"
+    Mode="rw"
+    Description="Destination on Unraid for organised TV show files."
+    Type="Path"
+    Display="always"
+    Required="true"
+    Mask="false">
+    /mnt/user/TV Shows
+  </Config>
+
+  <Config
+    Name="Movies Path"
+    Target="/mnt/movies"
+    Default="/mnt/user/Movies"
+    Mode="rw"
+    Description="Destination on Unraid for organised movie files."
+    Type="Path"
+    Display="always"
+    Required="true"
+    Mask="false">
+    /mnt/user/Movies
+  </Config>
+
+  <!-- Environment variables — SOURCE/TV/MOVIES paths are fixed to the
+       container mount points above and should not be changed. -->
+
+  <Config
+    Name="SOURCE_PATH"
+    Target="SOURCE_PATH"
+    Default="/mnt/source"
+    Mode=""
+    Description="[Do not change] Container path for the rclone source mount."
+    Type="Variable"
+    Display="advanced"
+    Required="true"
+    Mask="false">
+    /mnt/source
+  </Config>
+
+  <Config
+    Name="TVSHOW_PATH"
+    Target="TVSHOW_PATH"
+    Default="/mnt/tvshows"
+    Mode=""
+    Description="[Do not change] Container path for the TV shows mount."
+    Type="Variable"
+    Display="advanced"
+    Required="true"
+    Mask="false">
+    /mnt/tvshows
+  </Config>
+
+  <Config
+    Name="MOVIES_PATH"
+    Target="MOVIES_PATH"
+    Default="/mnt/movies"
+    Mode=""
+    Description="[Do not change] Container path for the movies mount."
+    Type="Variable"
+    Display="advanced"
+    Required="true"
+    Mask="false">
+    /mnt/movies
+  </Config>
+
+  <Config
+    Name="SCAN_INTERVAL"
+    Target="SCAN_INTERVAL"
+    Default="300"
+    Mode=""
+    Description="How often (in seconds) to scan for new files. Default 300 = every 5 minutes."
+    Type="Variable"
+    Display="always"
+    Required="false"
+    Mask="false">
+    300
+  </Config>
+
+  <Config
+    Name="DRY_RUN"
+    Target="DRY_RUN"
+    Default=""
+    Mode=""
+    Description="Set to 'true' to log what would be moved without actually moving anything. Useful for testing. Leave empty for normal operation."
+    Type="Variable"
+    Display="always"
+    Required="false"
+    Mask="false">
+  </Config>
+
+</Container>

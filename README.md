@@ -29,18 +29,36 @@ Watches a directory (e.g. an rclone-mounted Put.io folder) and automatically mov
 | `SCAN_INTERVAL` | — | `300` | Seconds between scans |
 | `DRY_RUN` | — | unset | Set to any value to log moves without executing them |
 
-## Docker (Unraid)
+## Unraid — Community Applications (easiest)
+
+1. In Unraid, open **Apps** (Community Applications)
+2. Click **Add Container** (the icon in the top right)
+3. Paste this URL into the template field:
+   ```
+   https://raw.githubusercontent.com/bnandaku/media-sorter/main/unraid/media-sorter.xml
+   ```
+4. Click **OK** — all variables and paths load pre-filled
+5. Set your three host paths:
+   - **Source Path** → your rclone Put.io mount (e.g. `/mnt/user/putio`)
+   - **TV Shows Path** → your TV shows share (e.g. `/mnt/user/TV Shows`)
+   - **Movies Path** → your movies share (e.g. `/mnt/user/Movies`)
+6. Optionally set `DRY_RUN=true` for a test run first
+7. Click **Apply**
+
+> The `SOURCE_PATH`, `TVSHOW_PATH`, and `MOVIES_PATH` environment variables are pre-wired to the container mount points — you only need to set the host-side paths.
+
+## Docker (manual)
 
 ```bash
 docker run -d \
   --name media-sorter \
-  -e SOURCE_PATH=/mnt/putio \
-  -e TVSHOW_PATH=/mnt/user/TV \
-  -e MOVIES_PATH=/mnt/user/Movies \
+  -e SOURCE_PATH=/mnt/source \
+  -e TVSHOW_PATH=/mnt/tvshows \
+  -e MOVIES_PATH=/mnt/movies \
   -e SCAN_INTERVAL=300 \
-  -v /mnt/putio:/mnt/putio \
-  -v /mnt/user/TV:/mnt/user/TV \
-  -v /mnt/user/Movies:/mnt/user/Movies \
+  -v /your/rclone/mount:/mnt/source \
+  -v /your/tv/path:/mnt/tvshows \
+  -v /your/movies/path:/mnt/movies \
   bharatram1/media-sorter:latest
 ```
 
@@ -48,11 +66,13 @@ docker run -d \
 
 ```bash
 docker run --rm \
-  -e SOURCE_PATH=/mnt/putio \
-  -e TVSHOW_PATH=/mnt/user/TV \
-  -e MOVIES_PATH=/mnt/user/Movies \
+  -e SOURCE_PATH=/mnt/source \
+  -e TVSHOW_PATH=/mnt/tvshows \
+  -e MOVIES_PATH=/mnt/movies \
   -e DRY_RUN=true \
-  -v /mnt/putio:/mnt/putio \
+  -v /your/rclone/mount:/mnt/source \
+  -v /your/tv/path:/mnt/tvshows \
+  -v /your/movies/path:/mnt/movies \
   bharatram1/media-sorter:latest
 ```
 
