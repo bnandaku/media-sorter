@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -50,7 +51,7 @@ func loadConfig() Config {
 }
 
 func requireEnv(key string) string {
-	v := os.Getenv(key)
+	v := strings.TrimSpace(os.Getenv(key))
 	if v == "" {
 		log.Fatalf("[Config] Required environment variable %s is not set", key)
 	}
